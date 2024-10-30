@@ -1,22 +1,24 @@
-import { View, Text, Image, FlatList, StyleSheet } from "react-native";
+import { Text, Image, FlatList, StyleSheet, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-import { HeaderText } from "@/components/$Text";
-import { Card } from "@/components/Card";
+import { useState } from "react";
 
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { useFetch } from "@/hooks/useFetch";
+import { capitalize, URLtoIdentifier } from "@/utilities/pokemon";
+import { HeaderText } from "@/components/$Text";
+import { Card } from "@/components/Card";
 import { PokemonCard } from "@/components/Pokemon/PokemonCard";
+import { SearchBar } from "@/components/SearchBar";
+import Row from "@/components/Row";
 
 const stylesheet = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 4
+    padding: 4,
+    gap: 16
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 16,
-    padding: 12
+    paddingHorizontal: 12
   },
   listing: {
     flex: 1
@@ -34,41 +36,49 @@ const stylesheet = StyleSheet.create({
 
 export default function Index() {
   const colors = useThemeColors();
-  const pokemons = Array.from({ length: 151 }, (_, index) => {
-    return {
-      id: index + 1,
-      name: `Pokemon #${index + 1}`
-    };
-  });
+  const [search, setSearch] = useState<string>(String());
+  // const { data, isFetching, refetch, fetchNextPage } =useInfiniteFetch("/pokemon?limit=30");
+  const { data, isFetching, refetch } = useFetch("/pokemon?limit=100000&offset=0");
+
+  // let pokemons = data ? data.pages.flatMap(page => page.results) : [];
+  let pokemons = data ? data.results : [];
+  pokemons = search
+    ? pokemons.filter(
+        pokemon =>
+          pokemon.name.includes(search.toLowerCase()) || URLtoIdentifier(pokemon.url).toString().includes(search)
+      )
+    : pokemons;
 
   return (
-    <SafeAreaView
-      style={[stylesheet.container, { backgroundColor: colors.primary }]}
-    >
-      <View style={stylesheet.header}>
-        <Image
-          source={require("@/assets/images/pokeball.png")}
-          width={24}
-          height={24}
-        />
+    <SafeAreaView style={[stylesheet.container, { backgroundColor: colors.primary }]}>
+      <Row style={stylesheet.header} gap={16}>
+        <Image source={require("@/assets/images/pokeball.png")} width={24} height={24} />
         <HeaderText variant={"headline"} color={"light"}>
           Pokédex
         </HeaderText>
-      </View>
+      </Row>
+      <Row>
+        <SearchBar search={search} onSearch={setSearch} />
+      </Row>
       <Card style={stylesheet.listing}>
         <FlatList
           data={pokemons}
           renderItem={({ item }) => (
-            <PokemonCard
-              id={item.id}
-              name={item.name}
-              style={stylesheet.item}
-            />
+            <PokemonCard id={URLtoIdentifier(item.url)} name={capitalize(item.name)} style={stylesheet.item} />
           )}
-          keyExtractor={item => String(item.id)}
+          keyExtractor={item => String(item.url)}
           numColumns={3}
           columnWrapperStyle={stylesheet.grid}
           contentContainerStyle={[stylesheet.list, stylesheet.grid]}
+          onRefresh={async () => {
+            await refetch();
+          }}
+          refreshing={isFetching}
+          /*
+          onEndReached={async () => {
+           await fetchNextPage();
+           }}
+           */
         />
       </Card>
     </SafeAreaView>

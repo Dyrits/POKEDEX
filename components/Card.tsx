@@ -15,10 +15,7 @@ type Props = ViewProps;
 export function Card({ style, ...props }: Props) {
   const colors = useThemeColors();
   return (
-    <View
-      {...props}
-      style={[style, stylesheet.card, { backgroundColor: colors.background }]}
-    >
+    <View {...props} style={[style, stylesheet.card, { backgroundColor: colors.background }]}>
       {props.children}
     </View>
   );

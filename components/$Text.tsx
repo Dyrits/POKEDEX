@@ -58,10 +58,7 @@ function $Text({ type = "body", variant = "small", color, ...props }: Props) {
   const style = stylesheet[variant as keyof typeof stylesheet];
 
   return (
-    <Text
-      {...props}
-      style={[style, { color: colors[color || "dark"] }, props.style]}
-    >
+    <Text {...props} style={[style, { color: colors[color || "dark"] }, props.style]}>
       {props.children}
     </Text>
   );
