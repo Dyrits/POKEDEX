@@ -1,4 +1,4 @@
-export function URLtoIdentifier(path: string): number {
+export function extractNumber(path: string): number {
   return Number(path.split("/").at(-2));
 }
 

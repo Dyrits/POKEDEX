@@ -1,4 +1,4 @@
-import { Image, View, StyleSheet, ViewProps, Pressable } from "react-native";
+import { Image, View, StyleSheet, ViewProps, Pressable, Platform } from "react-native";
 import { Link } from "expo-router";
 
 import { Card } from "@/components/Card";
@@ -26,23 +26,23 @@ const stylesheet = StyleSheet.create({
 });
 
 type Props = {
-  id: number;
+  number: number;
   name: string;
 } & Omit<ViewProps, "id">;
 
-export function PokemonCard({ id, name, style, ...props }: Props) {
+export function PokemonCard({ number, name, style, ...props }: Props) {
   const colors = useThemeColors();
 
   return (
-    <Link href={{ pathname: "/pokemon/[id]", params: { id } }} asChild>
+    <Link href={{ pathname: "/pokemon/[number]", params: { number } }} asChild>
       <Pressable style={style}>
         <Card style={stylesheet.card} {...props}>
           <BodyText variant={"caption"} color={"medium"} style={stylesheet.caption}>
-            #{String(id).padStart(3, "0")}
+            #{String(number).padStart(3, "0")}
           </BodyText>
           <Image
             source={{
-              uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
+              uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${number}.png`
             }}
             width={72}
             height={72}
