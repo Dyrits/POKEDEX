@@ -15,14 +15,14 @@ const stylesheet = StyleSheet.create({
 
 type Props = {
   value: "number" | "name";
-  onValue: (value: "number" | "name") => void;
+  onValue: (value: "number" | "name") => void
 };
 
 export function SortButton({ value, onValue }: Props) {
   const colors = useThemeColors();
   const asset = {
-    number: require("@/assets/images/sort-number.png"),
-    name: require("@/assets/images/sort-name.png")
+    number: require("@/assets/images/sort-name.png"),
+    name: require("@/assets/images/sort-number.png")
   }[value];
 
   function handlePress() {

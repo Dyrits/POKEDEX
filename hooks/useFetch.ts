@@ -1,9 +1,10 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { Colors } from "@/constants/Colors";
 
 const url = "https://pokeapi.co/api/v2";
 
 type APIResponse = {
-  [key: string]: {
+  "/pokemon?limit=100000&offset=0": {
     count: number;
     next: string;
     previous: string;
@@ -12,18 +13,35 @@ type APIResponse = {
       url: string;
     }[];
   };
+  "/pokemon/[number]": {
+    id: number;
+    name: string;
+    height: number;
+    weight: number;
+    types: [
+      {
+        type: {
+          name: keyof typeof Colors.type;
+        }
+      }
+    ]
+  };
 };
 
-export function useFetch<T extends keyof APIResponse>(endpoint: T) {
+export function useFetch<T extends keyof APIResponse>(endpoint: T, params: { [key: string]: string } = {}) {
+  const $endpoint = Object.entries(params).reduce((accumulator: string, [key, value]) => {
+    return accumulator.replaceAll(`[${ key }]`, value);
+  }, endpoint as string);
   return useQuery({
-    queryKey: [endpoint],
+    queryKey: [$endpoint],
     queryFn: async () => {
-      const response = await fetch(url + endpoint);
+      const response = await fetch(url + $endpoint);
       return (await response.json()) as Promise<APIResponse[T]>;
     }
   });
 }
 
+/*
 export function useInfiniteFetch<T extends keyof APIResponse>(endpoint: T) {
   return useInfiniteQuery({
     queryKey: [endpoint],
@@ -37,3 +55,4 @@ export function useInfiniteFetch<T extends keyof APIResponse>(endpoint: T) {
     }
   });
 }
+*/

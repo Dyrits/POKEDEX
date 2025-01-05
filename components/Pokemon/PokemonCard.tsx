@@ -4,6 +4,7 @@ import { Link } from "expo-router";
 import { Card } from "@/components/Card";
 import { BodyText } from "@/components/$Text";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { getArtwork } from "@/utilities/pokemon";
 
 const stylesheet = StyleSheet.create({
   card: {
@@ -42,7 +43,7 @@ export function PokemonCard({ number, name, style, ...props }: Props) {
           </BodyText>
           <Image
             source={{
-              uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${number}.png`
+              uri: getArtwork(number)
             }}
             width={72}
             height={72}

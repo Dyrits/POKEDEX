@@ -1,8 +1,6 @@
-import { Text, Image, FlatList, StyleSheet, ActivityIndicator } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Image, FlatList, StyleSheet } from "react-native";
 import { useMemo, useState } from "react";
 
-import { useThemeColors } from "@/hooks/useThemeColors";
 import { useFetch } from "@/hooks/useFetch";
 import { capitalize, extractNumber } from "@/utilities/pokemon";
 import { HeaderText } from "@/components/$Text";
@@ -11,14 +9,9 @@ import { PokemonCard } from "@/components/Pokemon/PokemonCard";
 import { SearchBar } from "@/components/SearchBar";
 import Row from "@/components/Row";
 import { SortButton } from "@/components/SortButton";
-import { set } from "yaml/dist/schema/yaml-1.1/set";
+import RootView from "@/components/RootView";
 
 const stylesheet = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 4,
-    gap: 16
-  },
   header: {
     paddingHorizontal: 12
   },
@@ -37,7 +30,6 @@ const stylesheet = StyleSheet.create({
 });
 
 export default function Index() {
-  const colors = useThemeColors();
   const [search, setSearch] = useState<string>(String());
   const [sort, setSort] = useState<"number" | "name">("number");
   // const { data, isFetching, refetch, fetchNextPage } =useInfiniteFetch("/pokemon?limit=30");
@@ -53,7 +45,7 @@ export default function Index() {
   }, [data, search, sort]);
 
   return (
-    <SafeAreaView style={[stylesheet.container, { backgroundColor: colors.primary }]}>
+    <RootView>
       <Row style={stylesheet.header} gap={16}>
         <Image source={require("@/assets/images/pokeball.png")} width={24} height={24} />
         <HeaderText variant={"headline"} color={"light"}>
@@ -85,6 +77,6 @@ export default function Index() {
            */
         />
       </Card>
-    </SafeAreaView>
+    </RootView>
   );
 }
