@@ -7,7 +7,7 @@ const stylesheet = StyleSheet.create({
     flex: 1,
     padding: 4,
     gap: 16
-  },
+  }
 });
 
 type Props = ViewProps;
@@ -16,5 +16,4 @@ export default function RootView({ style, ...props }: Props) {
   const colors = useThemeColors();
 
   return <SafeAreaView style={[stylesheet.container, { backgroundColor: colors.primary }, style]} {...props} />;
-
 }

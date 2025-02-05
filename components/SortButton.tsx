@@ -15,7 +15,7 @@ const stylesheet = StyleSheet.create({
 
 type Props = {
   value: "number" | "name";
-  onValue: (value: "number" | "name") => void
+  onValue: (value: "number" | "name") => void;
 };
 
 export function SortButton({ value, onValue }: Props) {

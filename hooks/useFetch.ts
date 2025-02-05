@@ -22,15 +22,26 @@ type APIResponse = {
       {
         type: {
           name: keyof typeof Colors.type;
-        }
+        };
       }
-    ]
+    ];
+    moves: {
+      move: {
+        name: string;
+      };
+    }[];
+  };
+  "/pokemon-species/[number]": {
+    flavor_text_entries: {
+      flavor_text: string;
+      language: string;
+    }[];
   };
 };
 
 export function useFetch<T extends keyof APIResponse>(endpoint: T, params: { [key: string]: string } = {}) {
   const $endpoint = Object.entries(params).reduce((accumulator: string, [key, value]) => {
-    return accumulator.replaceAll(`[${ key }]`, value);
+    return accumulator.replaceAll(`[${key}]`, value);
   }, endpoint as string);
   return useQuery({
     queryKey: [$endpoint],

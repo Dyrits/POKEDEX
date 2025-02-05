@@ -7,15 +7,15 @@ const stylesheets = {
   body: StyleSheet.create({
     small: {
       fontSize: 10,
-      lineHeight: 16
+      lineHeight: 18
     },
     medium: {
-      fontSize: 12,
-      lineHeight: 16
+      fontSize: 14,
+      lineHeight: 18
     },
     large: {
-      fontSize: 14,
-      lineHeight: 16
+      fontSize: 18,
+      lineHeight: 18
     },
     caption: {
       fontSize: 8,
@@ -25,17 +25,17 @@ const stylesheets = {
   header: StyleSheet.create({
     small: {
       fontSize: 10,
-      lineHeight: 16,
+      lineHeight: 18,
       fontWeight: "bold"
     },
     medium: {
-      fontSize: 12,
-      lineHeight: 16,
+      fontSize: 14,
+      lineHeight: 18,
       fontWeight: "bold"
     },
     large: {
-      fontSize: 14,
-      lineHeight: 16,
+      fontSize: 18,
+      lineHeight: 18,
       fontWeight: "bold"
     },
     headline: {
@@ -64,10 +64,10 @@ function $Text({ type = "body", variant = "small", color, ...props }: Props) {
   );
 }
 
-export function HeaderText({ variant = "small", ...props }: Props) {
-  return <$Text type="header" variant="headline" {...props} />;
+export function HeaderText({ variant = "headline", ...props }: Props) {
+  return <$Text type="header" variant={variant} {...props} />;
 }
 
-export function BodyText({ variant = "small", ...props }: Props) {
-  return <$Text type="body" variant="medium" {...props} />;
+export function BodyText({ variant = "medium", ...props }: Props) {
+  return <$Text type="body" variant={variant} {...props} />;
 }
