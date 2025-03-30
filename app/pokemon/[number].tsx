@@ -6,7 +6,7 @@ import Row from "@/components/Row";
 import { BodyText, HeaderText } from "@/components/$Text";
 import { useFetch } from "@/hooks/useFetch";
 import { Colors } from "@/constants/Colors";
-import { capitalize, getArtwork } from "@/utilities/pokemon";
+import { capitalize, getArtwork, shortenStatistic } from "@/utilities/pokemon";
 import { Card } from "@/components/Card";
 import Pokemon from "@/components/Pokemon";
 
@@ -43,6 +43,7 @@ export default function Details() {
   const types = (pokemon && pokemon.types.map(type => type.type.name)) || [];
   const type = types.length && types[0];
   const color = (type && Colors.type[type]) || "#FFF";
+  // @ts-ignore
   const flavor = species && species.flavor_text_entries.find(entry => entry.language.name === "en");
   const biography = flavor && flavor.flavor_text.replaceAll("\n", " ").replaceAll("POKéMON", "pokémon");
 
@@ -107,6 +108,16 @@ export default function Details() {
             <HeaderText variant={"large"} style={{ color }}>
               Statistics
             </HeaderText>
+            <View style={{ alignSelf: "stretch", gap: 10 }}>
+              { pokemon.stats.map(statistic => (
+                <Pokemon.Statistic
+                  key={statistic.stat.name}
+                  name={shortenStatistic(statistic.stat.name)}
+                  value={statistic.base_stat}
+                  color={color}
+                />
+              ))}
+            </View>
           </Card>
         </View>
       </RootView>

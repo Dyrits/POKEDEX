@@ -30,6 +30,12 @@ type APIResponse = {
         name: string;
       };
     }[];
+    stats: {
+      base_stat: number;
+      stat: {
+        name: string;
+      };
+    }[]
   };
   "/pokemon-species/[number]": {
     flavor_text_entries: {

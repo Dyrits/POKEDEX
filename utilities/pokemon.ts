@@ -9,3 +9,14 @@ export function capitalize(name: string): string {
 export function getArtwork(number: string | number): string {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${number}.png`;
 }
+
+export function shortenStatistic(statistic: string): string {
+  return {
+    "hp": "HP",
+    "attack": "ATTACK",
+    "defense": "DEFENSE",
+    "special-attack": "S-ATTACK",
+    "special-defense": "S-DEFENSE",
+    "speed": "SPEED",
+  }[statistic]!;
+}

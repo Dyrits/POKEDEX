@@ -1,7 +1,7 @@
 import { Image, ImageSourcePropType, StyleSheet, View, ViewProps } from "react-native";
 
 import Row from "@/components/Row";
-import { BodyText, HeaderText } from "@/components/$Text";
+import { BodyText } from "@/components/$Text";
 
 const stylesheet = StyleSheet.create({
   card: {
@@ -19,7 +19,7 @@ type Props = ViewProps & {
   icon?: ImageSourcePropType;
 };
 
-export function PokemonCharacteristic({ title, description, icon, style, ...props }: Props) {
+export function PokemonCharacteristics({ title, description, icon, style, ...props }: Props) {
   return (
     <View style={[style, stylesheet.card]}>
       <Row>

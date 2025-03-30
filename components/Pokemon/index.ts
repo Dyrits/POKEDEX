@@ -1,11 +1,13 @@
 import { PokemonCard } from "@/components/Pokemon/PokemonCard";
 import { PokemonType } from "@/components/Pokemon/PokemonType";
-import { PokemonCharacteristic } from "@/components/Pokemon/PokemonCharacteristic";
+import { PokemonCharacteristics } from "@/components/Pokemon/PokemonCharacteristics";
+import { PokemonStatistic } from "@/components/Pokemon/PokemonStatistic";
 
 const Pokemon = {
   Card: PokemonCard,
   Type: PokemonType,
-  Characteristic: PokemonCharacteristic
+  Characteristic: PokemonCharacteristics,
+  Statistic: PokemonStatistic
 };
 
 export default Pokemon;
